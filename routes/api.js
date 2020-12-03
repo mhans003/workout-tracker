@@ -5,7 +5,7 @@ const router = express.Router();
 const Workout = require("../models/Workout.js");
 
 router.get("/api/workouts", function(request, response) {
-
+    
 });
 
 router.post("/api/workouts", function(request, response) {

@@ -20,9 +20,11 @@ mongoose.set('useUnifiedTopology', true);
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workouttracker-mh", { useNewUrlParser: true });
 
 // Import routes and give access to them.
-var routes = require("./routes/api.js");
+const htmlRoutes = require("./routes/api.js");
+const apiRoutes = require("./routes/api.js");
 
-app.use(routes);
+app.use(htmlRoutes);
+app.use(apiRoutes);
 
 app.listen(PORT, () => {
     console.log(`App running on port ${PORT}`);
