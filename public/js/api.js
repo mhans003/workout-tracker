@@ -24,6 +24,7 @@ const API = {
         return json;
     },
     async createWorkout(data = {}) {
+        console.log(`Inside api.createWorkout. Body: ${JSON.stringify(data)}`);
         const res = await fetch("/api/workouts", {
             method: "POST",
             body: JSON.stringify(data),

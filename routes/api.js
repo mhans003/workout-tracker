@@ -9,7 +9,13 @@ apiRouter.get("/workouts", function(request, response) {
 });
 
 apiRouter.post("/workouts", function(request, response) {
-
+    Workout.create(request.body)
+        .then(result => {
+            response.json(result);
+        })
+        .catch(error => {
+            response.json(error);
+        });
 });
 
 apiRouter.put("/workouts/:id", function(request, response) {
