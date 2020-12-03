@@ -8,17 +8,25 @@ apiRouter.get("/workouts", function(request, response) {
     response.send("in api/workouts");
 });
 
-apiRouter.post("/api/workouts", function(request, response) {
+apiRouter.post("/workouts", function(request, response) {
 
 });
 
-apiRouter.put("/api/workouts", function(request, response) {
-
+apiRouter.put("/workouts/:id", function(request, response) {
+    console.log(request.body.type);
+    console.log(`Id: ${request.params.id}`);
 });
 
 //Get route?
-apiRouter.get("/api/workouts/range", function(request, response) {
-
+apiRouter.get("/workouts/range", function(request, response) {
+    Workout.find()
+        .then(data => {
+            response.json(data);
+        })
+        .catch(error => {
+            console.log("Something went wrong retrieving data.");
+            throw error;
+        });
 });
 
 module.exports = apiRouter;
