@@ -1,24 +1,24 @@
 const express = require("express");
 
-const router = express.Router();
+const apiRouter = express.Router();
 
 const Workout = require("../models/Workout.js");
 
-router.get("/api/workouts", function(request, response) {
-    
+apiRouter.get("/workouts", function(request, response) {
+    response.send("in api/workouts");
 });
 
-router.post("/api/workouts", function(request, response) {
+apiRouter.post("/api/workouts", function(request, response) {
 
 });
 
-router.put("/api/workouts", function(request, response) {
+apiRouter.put("/api/workouts", function(request, response) {
 
 });
 
 //Get route?
-router.get("/api/workouts/range", function(request, response) {
+apiRouter.get("/api/workouts/range", function(request, response) {
 
 });
 
-module.exports = router;
+module.exports = apiRouter;
