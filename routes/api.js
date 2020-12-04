@@ -21,6 +21,20 @@ apiRouter.post("/workouts", function(request, response) {
 apiRouter.put("/workouts/:id", function(request, response) {
     console.log(request.body.type);
     console.log(`Id: ${request.params.id}`);
+
+    const requestBody = request.body;
+
+    Workout.updateOne(
+        {_id: request.params.id},
+        {$push: {exercises: {requestBody}}}
+    ).then(result => {
+        console.log(result);
+        response.json(result);
+    })
+    .catch(error => {
+        console.log("Something went wrong adding exercise to this workout");
+        response.json(error);
+    });
 });
 
 //Get route?
