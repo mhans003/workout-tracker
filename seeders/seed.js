@@ -9,6 +9,7 @@ mongoose.connect("mongodb://localhost/workouttracker-mh", {
 });
 
 let workoutSeed = [
+    /*
     {
         day: new Date(new Date().setDate(new Date().getDate() - 10)),
         exercises: [
@@ -72,6 +73,7 @@ let workoutSeed = [
             }
         ]
     },
+    */
     {
         day: new Date(new Date().setDate(new Date().getDate() - 5)),
         exercises: [
