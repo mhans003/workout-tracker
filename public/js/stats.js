@@ -59,11 +59,11 @@ function populateChart(data) {
             ],
             datasets: [
                 {
-                label: "Workout Duration In Minutes",
-                backgroundColor: "red",
-                borderColor: "red",
-                data: durations,
-                fill: false
+                    label: "Workout Duration In Minutes",
+                    backgroundColor: "red",
+                    borderColor: "red",
+                    data: durations,
+                    fill: false
                 }
             ]
         },
@@ -192,7 +192,7 @@ function duration(data) {
 
     data.forEach(workout => {
         workout.exercises.forEach(exercise => {
-        durations.push(exercise.duration);
+            durations.push(exercise.duration);
         });
     });
 
@@ -204,7 +204,7 @@ function calculateTotalWeight(data) {
 
     data.forEach(workout => {
         workout.exercises.forEach(exercise => {
-        total.push(exercise.weight);
+            total.push(exercise.weight);
         });
     });
 
@@ -216,7 +216,7 @@ function workoutNames(data) {
 
     data.forEach(workout => {
         workout.exercises.forEach(exercise => {
-        workouts.push(exercise.name);
+            workouts.push(exercise.name);
         });
     });
     
