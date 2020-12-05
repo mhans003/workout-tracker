@@ -20,27 +20,12 @@ app.use(express.json());
 mongoose.set('useUnifiedTopology', true);
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workouttracker-mh", { useNewUrlParser: true });
 
-/*
-app.get("/", function(request, response) {
-    response.sendFile(__dirname + "/index.html");
-});
-
-app.get("/exercise", function(request, response) {
-    response.sendFile(__dirname + "/exercise.html");
-});
-
-app.get("/stats", function(request, response) {
-    response.sendFile(__dirname + "/stats.html");
-});
-*/
-
-// Import routes and give access to them.
+//Import routes and give access to them.
 const htmlRoutes = require("./routes/htmlroutes");
 const apiRoutes = require("./routes/api");
 
 app.use("/", htmlRoutes);
 app.use("/api", apiRoutes);
-//app.use("/api", apiRoutes);
 
 app.listen(PORT, () => {
     console.log(`App running on port ${PORT}`);

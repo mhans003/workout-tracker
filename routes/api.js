@@ -5,42 +5,9 @@ const apiRouter = express.Router();
 
 const Workout = require("../models/Workout.js");
 
+//Get all workouts from the database, and include a running total for the duration.
 apiRouter.get("/workouts", function(request, response) {
-    
-    /*
-    Workout.find()
-        .then(data => {
-            response.json(data);
-        })
-        .catch(error => {
-            console.log("Something went wrong retrieving data.");
-            throw error;
-        });
-    */
-
-    //Rewrite with aggregation pipeline to return totalDuration sum
-
-    /*
-
-        {
-            $group: {
-                _id: "$_id", 
-                //day: "$day",
-                numExercises: "$exercises.length",
-                //exercises: "$exercises",
-                totalDuration: {
-                    $sum: "$exercises.duration"
-                }
-            }
-        },
-
-
-
-        {$unwind: "$exercises"},
-        
-
-    */
-    
+    //Using the aggregation pipeline, get all exercise data as well as a duration total for each day.
     Workout.aggregate([
         {$match: {}},
         {
@@ -76,6 +43,7 @@ apiRouter.get("/workouts/range", function(request, response) {
         });
 });
 
+//Post a new workout to the database as an empty object.
 apiRouter.post("/workouts", function(request, response) {
     Workout.create(request.body)
         .then(result => {
@@ -86,12 +54,14 @@ apiRouter.post("/workouts", function(request, response) {
         });
 });
 
+//Add a new exercise to an existing workout.
 apiRouter.put("/workouts/:id", function(request, response) {
     console.log(request.body);
     console.log(`Id: ${request.params.id}`);
 
     const requestBody = request.body;
 
+    //Update where the ID matches, and push the exercise data to the exercise array in the database.
     Workout.updateOne(
         {_id: request.params.id},
         {$push: {exercises: requestBody}}

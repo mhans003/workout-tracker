@@ -1,20 +1,21 @@
-// get all workout data from back-end
-
+//Get all workout data from server.
 fetch("/api/workouts/range")
     .then(response => {
         return response.json();
     })
     .then(data => {
+        //Then, populate the charts with the data.
         console.log(data);
         populateChart(data);
     });
 
-    /*
+/*
 const workoutData = API.getWorkoutsInRange();
 console.log(workoutData);
 */
 
 function generatePalette() {
+    //Generate the color palette for the output.
     const arr = [
         "#003f5c",
         "#2f4b7c",
@@ -38,17 +39,20 @@ function generatePalette() {
 }
 
 function populateChart(data) {
+    //For each major category (exercise property), get the totals.
     let durations = duration(data);
     let pounds = calculateTotalWeight(data);
     console.log(pounds);
     let workouts = workoutNames(data);
     const colors = generatePalette();
 
+    //Identify the parts of the HTML where the charts will be rendered.
     let line = document.querySelector("#canvas").getContext("2d");
     let bar = document.querySelector("#canvas2").getContext("2d");
     let pie = document.querySelector("#canvas3").getContext("2d");
     let pie2 = document.querySelector("#canvas4").getContext("2d");
 
+    //Produce the line chart for the exercise duration.
     let lineChart = new Chart(line, {
         type: "line",
         data: {
@@ -97,6 +101,7 @@ function populateChart(data) {
         }
     });
 
+    //Generate the bar chart for exercise weight.
     let barChart = new Chart(bar, {
         type: "bar",
         data: {
@@ -150,6 +155,7 @@ function populateChart(data) {
         }
     });
 
+    //Generate pie chart for the exercises.
     let pieChart = new Chart(pie, {
         type: "pie",
         data: {
@@ -170,6 +176,7 @@ function populateChart(data) {
         }
     });
 
+    //Generate donut chart for the exercises.
     let donutChart = new Chart(pie2, {
         type: "doughnut",
         data: {
@@ -191,6 +198,7 @@ function populateChart(data) {
     });
 }
 
+//Get the total duration for each day of exercise.
 function duration(data) {
     let durations = [];
 
@@ -205,19 +213,13 @@ function duration(data) {
     return durations;
 }
 
+//Get the total weight for each day of exercise.
 function calculateTotalWeight(data) {
-    //console.log(data);
-    //console.log(`Data in calculateTotal: ${JSON.stringify(data)}`);
     let total = [];
-
-    //let dataObject = JSON.parse(JSON.stringify(data));
-    //console.log(dataObject);
 
     data.forEach(workout => {
         let thisWorkoutTotal = 0;
         workout.exercises.forEach(exercise => {
-            console.log(exercise);
-            console.log(exercise.weight);
             thisWorkoutTotal += exercise.weight;
         });
         total.push(thisWorkoutTotal);
@@ -227,6 +229,7 @@ function calculateTotalWeight(data) {
     return total;
 }
 
+//Get the names of each exercise.
 function workoutNames(data) {
     let workouts = [];
 

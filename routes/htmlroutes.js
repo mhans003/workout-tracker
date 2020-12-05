@@ -3,7 +3,7 @@ const path = require("path");
 
 const router = express.Router();
 
-//const Workout = require("../models/Workout.js");
+//Create the routes for each HTML page.
 
 router.get("/", function(request, response) {
     response.sendFile(path.resolve("index.html"));
