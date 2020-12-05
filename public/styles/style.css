@@ -13,16 +13,31 @@ body,
 }
 
 body {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Roboto', sans-serif !important;
+    font-weight: 300;
 }
 
 nav {
     background-color: #5793fd;
     color: #ffffff;
     height: 80px;
-    padding: 10px;
+    padding: 6px;
     line-height: 3;
-    font-size: 1.2rem;
+    font-size: 1.8rem;
+    font-weight: 300 !important;
+}
+
+h1, 
+h2, 
+h3, 
+h4, 
+h5 {
+    font-family: 'Roboto', sans-serif !important;
+    font-weight: 400 !important;
+}
+
+p {
+    font-size: 1.4rem;
 }
 
 a,
@@ -429,6 +444,19 @@ form > button {
     padding: 10px;
 }
 
+/* Flex Container */
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+}
+
+.nav-item {
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
 @keyframes toast {
     50% {
         opacity: 1;
@@ -437,5 +465,16 @@ form > button {
     100% {
         opacity: 0;
         right: -320px;
+    }
+}
+
+@media screen and (max-width: 384px) {
+    nav {
+        height: 160px;
+    }
+
+    .nav-item {
+        width: 100%;
+        text-align: center;
     }
 }
