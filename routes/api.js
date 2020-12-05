@@ -32,8 +32,11 @@ apiRouter.get("/workouts", function(request, response) {
     
 });
 
+//Retrieve no more than 7 results from the database.
 apiRouter.get("/workouts/range", function(request, response) {
     Workout.find()
+        .sort({day: -1})
+        .limit(7)
         .then(data => {
             response.json(data);
         })
