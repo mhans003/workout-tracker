@@ -39,6 +39,12 @@ function generatePalette() {
 }
 
 function populateChart(data) {
+    //Get all dates to populate chart.
+    let chartDates = getDates(data); 
+    console.log(chartDates);
+
+    console.log("another log");
+
     //For each major category (exercise property), get the totals.
     let durations = duration(data);
     let pounds = calculateTotalWeight(data);
@@ -57,13 +63,7 @@ function populateChart(data) {
         type: "line",
         data: {
             labels: [
-                "Sunday",
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday"
+                ...chartDates
             ],
             datasets: [
                 {
@@ -106,13 +106,7 @@ function populateChart(data) {
         type: "bar",
         data: {
             labels: [
-                "Sunday",
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday",
+                ...chartDates
             ],
             datasets: [
                 {
@@ -196,6 +190,20 @@ function populateChart(data) {
             }
         }
     });
+}
+
+//Get the dates to populate chart with.
+function getDates(data) {
+    let dates = [];
+
+    console.log("In getdates");
+    console.log(data.length);
+
+    data.forEach(workout => {
+        dates.push(formatDate(workout.day));
+    });
+
+    return dates;
 }
 
 //Get the total duration for each day of exercise.
