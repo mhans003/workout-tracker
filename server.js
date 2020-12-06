@@ -17,8 +17,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 //Connect to Database
-mongoose.set('useUnifiedTopology', true);
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workouttracker-mh", { useNewUrlParser: true });
+mongoose.connect(
+    process.env.MONGODB_URI || "mongodb://localhost/workouttracker-mh", 
+    { 
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        useFindAndModify: false
+    }
+);
 
 //Import routes and give access to them.
 const htmlRoutes = require("./routes/htmlroutes");
