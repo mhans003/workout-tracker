@@ -17,22 +17,22 @@ console.log(workoutData);
 function generatePalette() {
     //Generate the color palette for the output.
     const arr = [
-        "#003f5c",
-        "#2f4b7c",
-        "#665191",
-        "#a05195",
-        "#d45087",
-        "#f95d6a",
-        "#ff7c43",
-        "ffa600",
-        "#003f5c",
-        "#2f4b7c",
-        "#665191",
-        "#a05195",
-        "#d45087",
-        "#f95d6a",
-        "#ff7c43",
-        "ffa600"
+        "rgba(120,47,223,1.0)",
+        "rgba(154,47,223,1.0)",
+        "rgba(188,47,223,1.0)",
+        "rgba(188,47,100,1.0)",
+        "rgba(158,98,145,1.0)",
+        "rgba(158,98,179,1.0)",
+        "rgba(172,143,179,1.0)",
+        "rgba(72,130,179,1.0)",
+        "rgba(87,107,179,1.0)",
+        "rgba(144,107,125,1.0)",
+        "rgba(184,67,188,1.0)",
+        "rgba(217,105,218,1.0)",
+        "rgba(81,38,79,1.0)",
+        "rgba(81,38,129,1.0)",
+        "rgba(196,38,129,1.0)",
+        "rgba(50,38,207,1.0)"
     ];
 
     return arr;
@@ -67,15 +67,21 @@ function populateChart(data) {
             ],
             datasets: [
                 {
-                    label: "Workout Duration In Minutes",
-                    backgroundColor: "red",
-                    borderColor: "red",
+                    label: "Workout Duration (min)",
+                    borderColor: "rgba(86, 128, 233, 1.0)",
+                    backgroundColor: "rgba(132, 206, 235, 1.0)",
                     data: durations,
                     fill: false
                 }
             ]
         },
         options: {
+            legend: {
+                labels: {
+                    fontFamily: "Ubuntu",
+                    fontSize: 20
+                }
+            },
             responsive: true,
             title: {
                 display: true
@@ -102,6 +108,9 @@ function populateChart(data) {
     });
 
     //Generate the bar chart for exercise weight.
+    console.log(pounds);
+    let poundColors = getPoundColors(pounds);
+    console.log(poundColors);
     let barChart = new Chart(bar, {
         type: "bar",
         data: {
@@ -110,32 +119,33 @@ function populateChart(data) {
             ],
             datasets: [
                 {
-                    label: "Pounds",
+                    label: "Pounds Lifted",
                     data: pounds,
                     backgroundColor: [
-                        "rgba(255, 99, 132, 0.2)",
-                        "rgba(54, 162, 235, 0.2)",
-                        "rgba(255, 206, 86, 0.2)",
-                        "rgba(75, 192, 192, 0.2)",
-                        "rgba(153, 102, 255, 0.2)",
-                        "rgba(255, 159, 64, 0.2)"
+                        ...poundColors
                     ],
                     borderColor: [
-                        "rgba(255, 99, 132, 1)",
-                        "rgba(54, 162, 235, 1)",
-                        "rgba(255, 206, 86, 1)",
-                        "rgba(75, 192, 192, 1)",
-                        "rgba(153, 102, 255, 1)",
-                        "rgba(255, 159, 64, 1)"
+                        "rgba(86, 128, 233, 1.0)",
+                        "rgba(86, 128, 233, 1.0)",
+                        "rgba(86, 128, 233, 1.0)",
+                        "rgba(86, 128, 233, 1.0)",
+                        "rgba(86, 128, 233, 1.0)",
+                        "rgba(86, 128, 233, 1.0)",
+                        "rgba(86, 128, 233, 1.0)"
                     ],
                     borderWidth: 1
                 }
             ]
         },
         options: {
+            legend: {
+                labels: {
+                    fontFamily: "Ubuntu",
+                    fontSize: 20
+                }
+            },
             title: {
-                display: true,
-                text: "Pounds Lifted"
+                display: false
             },
             scales: {
                 yAxes: [
@@ -163,9 +173,16 @@ function populateChart(data) {
             ]
         },
         options: {
+            legend: {
+                labels: {
+                    fontFamily: "Ubuntu"
+                }
+            },
             title: {
                 display: true,
-                text: "Excercises Performed"
+                text: "Excercises Performed",
+                fontFamily: "Ubuntu",
+                fontSize: 20
             }
         }
     });
@@ -184,9 +201,16 @@ function populateChart(data) {
             ]
         },
         options: {
+            legend: {
+                labels: {
+                    fontFamily: "Ubuntu"
+                }
+            },
             title: {
                 display: true,
-                text: "Excercises Performed"
+                text: "Excercises Performed",
+                fontFamily: "Ubuntu",
+                fontSize: 20
             }
         }
     });
@@ -248,4 +272,26 @@ function workoutNames(data) {
     });
     
     return workouts;
+}
+
+//Get the 'a' values (up to 1.0) for the rgba colors that will populate chart depending on how close it is to the max pounds. 
+function getPoundColors(pounds) {
+    console.log(pounds);
+
+    let maxPound = 0;
+    let poundColors = [];
+
+    //Get the highest number of pounds (this will be the default 1.0 'a' value).
+    pounds.forEach(pound => {
+        if(pound > maxPound) {
+            maxPound = pound;
+        } 
+    });
+    
+    //Get all other 'a' values for each day, relative to the greatest number of pounds lifted.
+    pounds.forEach(pound => {
+        poundColors.push(`rgba(132, 206, 235, ${Number((pound / maxPound).toFixed(2))})`);
+    });
+
+    return poundColors;
 }
